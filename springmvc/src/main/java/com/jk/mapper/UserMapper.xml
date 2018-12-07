@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jk.mapper.UserMapper">
+    <!-- <resultMap id="BaseResultMap" type="com.jk.model.User" >
+    <id column="u_id" property="uId" jdbcType="VARCHAR" />
+    <result column="login_name" property="loginName" jdbcType="VARCHAR" />
+    <result column="u_date" property="uDate" jdbcType="DATE" />
+    <result column="u_status" property="uStatus" jdbcType="INTEGER" />
+  </resultMap> -->
+
+    <insert id="registered">
+
+          insert into login_zr(
+          loginId,
+          loginPwd,
+          fullPhone,
+          confirmPassword
+        )values (
+          #{l.loginId},
+          #{l.loginPwd},
+          #{l.fullPhone},
+          #{l.confirmPassword}
+        )
+
+    </insert>
+
+    <select id="loginUser" resultType="com.jk.model.login">
+
+        select * from login_zr  where  fullPhone =#{ls.fullPhone} ;
+
+    </select>
+</mapper>

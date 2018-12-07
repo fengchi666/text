@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.jk.mapper.GoodsMapper">
+    <!--商品条件查询-->
+    <select id="queryGoods" resultType="com.jk.model.Goods">
+        SELECT * FROM t_goods where 1=1
+        <if test="goods.goodName != null and goods.goodName != ''">
+            and goodName like '%${goods.goodName}%'
+        </if>
+        <if test="goods.minPrice != null and goods.minPrice != ''">
+            and goodPrice &gt; #{goods.minPrice}
+        </if>
+        <if test="goods.maxPrice != null and goods.maxPrice != ''">
+              and goodPrice &lt; #{goods.maxPrice}
+        </if>
+       <if test="goods.goodType != null and goods.goodType != ''">
+           and goodType = #{goods.goodType}
+       </if>
+        limit #{start},#{pageSize}
+    </select>
+    <!--商品查询数量-->
+    <select id="queryCountGood" resultType="long">
+        select count(*) from t_goods where 1=1
+        <if test="goods.goodName != null and goods.goodName != ''">
+            and goodName like '%${goods.goodName}%'
+        </if>
+        <if test="goods.minPrice != null and goods.minPrice != ''">
+            and goodPrice &gt; #{goods.minPrice}
+        </if>
+        <if test="goods.maxPrice != null and goods.maxPrice != ''">
+            and goodPrice &lt; #{goods.maxPrice}
+        </if>
+        <if test="goods.goodType != null and goods.goodType != ''">
+            and goodType = #{goods.goodType}
+        </if>
+    </select>
+    <!--删除单个商品-->
+    <delete id="delGoods" parameterType="String">
+        delete from t_goods where goodId = #{goodId}
+    </delete>
+    <!--新增单个商品-->
+    <insert id="addGoods">
+        INSERT INTO t_goods (goodId,goodName,goodPrice,goodType,goodImg,inventory) VALUES (#{goods.goodId},#{goods.goodName},#{goods.goodPrice},#{goods.goodType},#{goods.goodImg},#{goods.inventory})
+    </insert>
+    <!--修改商品回显-->
+    <select id="queryGoodsById" parameterType="String" resultType="com.jk.model.Goods">
+        select * from t_goods where goodId = #{goodId}
+    </select>
+
+<!--    &lt;!&ndash; 查询 &ndash;&gt;
+    <select id="getCountry" resultType="com.jk.model.Country">
+        SELECT * FROM country
+    </select>
+    &lt;!&ndash; 删除 &ndash;&gt;
+    <delete id="delCon" parameterType="String">
+        delete from country where id = #{id}
+    </delete>
+    &lt;!&ndash; 新增 &ndash;&gt;
+    <insert id="addCountry" parameterType="com.jk.model.Country">
+          insert into country (countryname,countrycode)  values (#{countryName},#{countryCode})
+    </insert>
+    &lt;!&ndash; 修改回显 &ndash;&gt;
+    <select id="queryForUpdate" parameterType="String" resultType="com.jk.model.Country">
+        SELECT * FROM country where id = #{id}
+    </select>
+    &lt;!&ndash; 修改 &ndash;&gt;
+    <update id="updateCountry" parameterType="com.jk.model.Country">
+        update country set
+		countryname = #{countryName},
+		countrycode = #{countryCode}
+		where id = #{id}
+    </update>-->
+</mapper>
